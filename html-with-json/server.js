@@ -30,6 +30,21 @@ http
       );
     }
 
+    if (req.url === '/styles.css') {
+      return fs.readFile(
+        path.resolve(__dirname, './styles.css'),
+        (err, styleString) => {
+          if (err) {
+            res.setHeader('Content-Type', 'application/json');
+            res.statusCode = 404;
+            return res.end(JSON.stringify({ error: 'Not found' }));
+          }
+
+          return res.end(styleString);
+        }
+      );
+    }
+
     res.setHeader('Content-Type', 'application/json');
     res.statusCode = 404;
     return res.end(JSON.stringify({ error: 'Not found' }));
